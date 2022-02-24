@@ -11,11 +11,38 @@
     <h1>Bob's Auto Parts</h1>
     <h2>Order Results</h2>
     <?php
-//        echo "<p>Order processed at ";
-//        echo date('H:i, jS F Y');
-//        echo "</p>";
-    $tireqty = $_POST['tireqty'];
-    echo htmlspecialchars($tireqty);
-    ?>
+     ['tireqty'=>$tireqty, 'oilqty'=>$oilqty, 'sparkqty'=>$sparkqty, 'find'=>$find]= $_POST;
+     $totalqty =0;
+     $totalqty = $tireqty + $oilqty + $sparkqty;
+
+     echo "<p>Items ordered:".$totalqty."<br/>";
+
+     define('TIREPRICE',100);
+     define('OILPRICE',10);
+     define('SPARKPRICE',4);
+
+     $totalamount = $tireqty * TIREPRICE
+                    + $oilqty * OILPRICE
+                    + $sparkqty * SPARKPRICE;
+
+     echo "Subtotal : $".number_format($totalamount,2)."<br/>";
+
+     $taxrate = 0.10;
+     $totalamount = $totalamount * (1+$taxrate);
+     echo "Total including tax : $".number_format($totalamount,2)."</p>";
+
+     if($find == "a"){
+         echo "<p>Regular customer.</p>";
+     } elseif($find == "b"){
+         echo "<p>Customer referred by TV advert.";
+     } elseif($find == "c"){
+         echo "<p>Customer referred by phone directory.</p>";
+     } elseif ($find == "d"){
+         echo "<p>Customer referred by word of mouth.</p>";
+     } else {
+         echo "<p>We do not know how this customer found us</p>";
+     }
+
+     ?>
 </body>
 </html>
